@@ -1,3 +1,15 @@
+require 'uri'
+require 'cgi'
+
+# The URI module in newer Ruby versions (3.0+) does not have the 'encode' method
+unless URI.respond_to?(:encode)
+  module URI
+    def self.encode(str, _unsafe = nil)
+      CGI.escape(str.to_s)
+    end
+  end
+end
+
 require 'digest/md5'
 require 'httparty'
 
